@@ -24,6 +24,6 @@ public class Character {
     @Column
     public String picture;
 
-    @ManyToMany(mappedBy = "character", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.LAZY)
     public List<Movie> movies = new ArrayList<>();
 }

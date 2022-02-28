@@ -1,0 +1,11 @@
+package com.assignment.moviecharacters.Repositories;
+
+import com.assignment.moviecharacters.Models.Character;
+import com.assignment.moviecharacters.Models.Franchise;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface FranchiseRepository
+        extends JpaRepository<Franchise, Long> {
+}
