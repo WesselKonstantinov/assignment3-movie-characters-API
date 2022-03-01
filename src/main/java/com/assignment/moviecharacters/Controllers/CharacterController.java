@@ -1,6 +1,7 @@
 package com.assignment.moviecharacters.Controllers;
 
 import com.assignment.moviecharacters.Models.Character;
+import com.assignment.moviecharacters.Models.Movie;
 import com.assignment.moviecharacters.Repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -38,6 +40,42 @@ public class CharacterController {
         HttpStatus status = HttpStatus.OK;
         List<Character> characters = characterRepository.findAll();
         return new ResponseEntity<>(characters, status);
+    }
+
+
+    @PatchMapping("/{id}") //Update character
+    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character newCharacter) {
+        Character character = new Character();
+        HttpStatus status;
+
+        if (characterRepository.existsById(id)) {
+
+            Optional<Character> characterRepos = characterRepository.findById(id);
+            character = characterRepos.get();
+
+            if (newCharacter.fullName != null) {
+                character.fullName = newCharacter.fullName;
+            }
+            if (newCharacter.alias != null) {
+                character.alias = newCharacter.alias;
+            }
+            if (newCharacter.gender != null) {
+                character.gender = newCharacter.gender;
+            }
+            if (newCharacter.picture != null) {
+                character.picture = newCharacter.picture;
+            }
+            if (newCharacter.movies != null && !newCharacter.movies.isEmpty()) {
+                character.movies.addAll(newCharacter.movies);
+            }
+            status = HttpStatus.OK;
+            characterRepository.save(character);
+
+        } else {
+            status = HttpStatus.NOT_FOUND;
+
+        }
+        return new ResponseEntity<>(character, status);
     }
 
 
