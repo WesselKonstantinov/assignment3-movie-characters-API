@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "movie")
 public class Movie {
 
     @Id
@@ -30,11 +31,7 @@ public class Movie {
     public String trailer;
 
     @ManyToOne()
-    @JoinTable(
-            name = "franchise",
-            joinColumns = {@JoinColumn(name = "movie_id")},
-            inverseJoinColumns = {@JoinColumn(name = "franchise_id")}
-    )
+    @JoinColumn(name = "franchise_id")
     public Franchise franchise;
 
     @ManyToMany(fetch = FetchType.LAZY)
