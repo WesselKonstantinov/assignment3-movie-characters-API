@@ -1,90 +1,102 @@
 package com.assignment.moviecharacters.Controllers;
 
-import com.assignment.moviecharacters.Models.Character;
-import com.assignment.moviecharacters.Models.Movie;
-import com.assignment.moviecharacters.Repositories.CharacterRepository;
+import com.assignment.moviecharacters.Models.MovieCharacter;
+import com.assignment.moviecharacters.Repositories.MovieCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/characters")
-public class CharacterController {
+public class MovieCharacterController {
 
     @Autowired
-    private CharacterRepository characterRepository;
+    private MovieCharacterRepository movieCharacterRepository;
 
+    //Get all characters
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieCharacter>> getAllMovieCharacters() {
+        HttpStatus status = HttpStatus.OK;
+        List<MovieCharacter> movieCharacters = movieCharacterRepository.findAll();
+        return new ResponseEntity<>(movieCharacters, status);
+    }
 
-    //add character
-    @PostMapping("/add_character")
-    public ResponseEntity<Character> addCharacter(@RequestBody Character character) {
+    // Get specific character
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieCharacter> getMovieCharacter(@PathVariable Long id) {
+        MovieCharacter movieCharacter = new MovieCharacter();
         HttpStatus status;
 
-        if (character.id != null) {
+        if (movieCharacterRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            movieCharacter = movieCharacterRepository.findById(id).get();
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(movieCharacter, status);
+    }
+
+    //Add character
+    @PostMapping("/add")
+    public ResponseEntity<MovieCharacter> addMovieCharacter(@RequestBody MovieCharacter movieCharacter) {
+        HttpStatus status;
+
+        if (movieCharacter.id != null) {
             status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(character, status);
+            return new ResponseEntity<>(movieCharacter, status);
         }
         status = HttpStatus.OK;
-        character = characterRepository.save(character);
-        return new ResponseEntity<>(character, status);
+        movieCharacter = movieCharacterRepository.save(movieCharacter);
+        return new ResponseEntity<>(movieCharacter, status);
     }
 
-    @GetMapping("/all") //Get all characters
-    public ResponseEntity<List<Character>> getAllCharacters() {
-        HttpStatus status = HttpStatus.OK;
-        List<Character> characters = characterRepository.findAll();
-        return new ResponseEntity<>(characters, status);
-    }
-
-
-    @PatchMapping("/{id}") //Update character
-    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character newCharacter) {
-        Character character = new Character();
+    //Update character
+    @PatchMapping("/{id}")
+    public ResponseEntity<MovieCharacter> updateMovieCharacter(@PathVariable Long id, @RequestBody MovieCharacter newMovieCharacter) {
+        MovieCharacter movieCharacter = new MovieCharacter();
         HttpStatus status;
 
-        if (characterRepository.existsById(id)) {
+        if (movieCharacterRepository.existsById(id)) {
 
-            Optional<Character> characterRepos = characterRepository.findById(id);
-            character = characterRepos.get();
+            Optional<MovieCharacter> characterRepos = movieCharacterRepository.findById(id);
+            movieCharacter = characterRepos.get();
 
-            if (newCharacter.fullName != null) {
-                character.fullName = newCharacter.fullName;
+            if (newMovieCharacter.fullName != null) {
+                movieCharacter.fullName = newMovieCharacter.fullName;
             }
-            if (newCharacter.alias != null) {
-                character.alias = newCharacter.alias;
+            if (newMovieCharacter.alias != null) {
+                movieCharacter.alias = newMovieCharacter.alias;
             }
-            if (newCharacter.gender != null) {
-                character.gender = newCharacter.gender;
+            if (newMovieCharacter.gender != null) {
+                movieCharacter.gender = newMovieCharacter.gender;
             }
-            if (newCharacter.picture != null) {
-                character.picture = newCharacter.picture;
+            if (newMovieCharacter.picture != null) {
+                movieCharacter.picture = newMovieCharacter.picture;
             }
-            if (newCharacter.movies != null && !newCharacter.movies.isEmpty()) {
-                character.movies.addAll(newCharacter.movies);
+            if (newMovieCharacter.movies != null && !newMovieCharacter.movies.isEmpty()) {
+                movieCharacter.movies.addAll(newMovieCharacter.movies);
             }
             status = HttpStatus.OK;
-            characterRepository.save(character);
+            movieCharacterRepository.save(movieCharacter);
 
         } else {
             status = HttpStatus.NOT_FOUND;
 
         }
-        return new ResponseEntity<>(character, status);
+        return new ResponseEntity<>(movieCharacter, status);
     }
 
-
-    @DeleteMapping("/{id}") //Delete Character
-    public ResponseEntity<Character> deleteCharacter(@PathVariable Long id) {
+    //Delete Character
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MovieCharacter> deleteMovieCharacter(@PathVariable Long id) {
         HttpStatus status;
 
-        if (characterRepository.existsById(id)) {
-            characterRepository.deleteById(id);
+        if (movieCharacterRepository.existsById(id)) {
+            movieCharacterRepository.deleteById(id);
             status = HttpStatus.OK;
 
         } else {
@@ -93,7 +105,4 @@ public class CharacterController {
         return new ResponseEntity<>(status);
 
     }
-
-
-
 }

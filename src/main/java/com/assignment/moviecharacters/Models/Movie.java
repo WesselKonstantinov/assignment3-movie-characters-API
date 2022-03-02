@@ -36,10 +36,10 @@ public class Movie {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "movie_characters",
+            name = "movie_actors",
             joinColumns = {@JoinColumn(name = "movie_id")},
-            inverseJoinColumns = {@JoinColumn(name = "character_id")}
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")}
     )
-    public List<Character> characters = new ArrayList<>();
+    public List<MovieCharacter> movieCharacters = new ArrayList<>();
 
 }
