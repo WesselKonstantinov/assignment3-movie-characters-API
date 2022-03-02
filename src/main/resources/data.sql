@@ -67,44 +67,44 @@ INSERT INTO franchise (name, description) VALUES (
     'The Princess Bride was a popular 1973 novel which was adapted into a 1987 film which became a cult classic.'
 );
 
-INSERT INTO character (full_name, gender, picture) VALUES (
+INSERT INTO actor (full_name, gender, picture) VALUES (
     'Cary Elwes',
     'MALE',
     'https://en.wikipedia.org/wiki/Cary_Elwes#/media/File:Cary_Elwes_September_2015.jpg'
 );
 
-INSERT INTO character (full_name, alias, gender, picture) VALUES (
+INSERT INTO actor (full_name, alias, gender, picture) VALUES (
     'Mandel Bruce Patinkin',
     'Mandy Patinkin',
     'MALE',
     'https://en.wikipedia.org/wiki/Mandy_Patinkin#/media/File:MandyPatinkin_1_13_12.JPG'
 );
 
-INSERT INTO character (full_name, gender, picture) VALUES (
+INSERT INTO actor (full_name, gender, picture) VALUES (
     'Val Kilmer',
     'MALE',
     'https://en.wikipedia.org/wiki/Val_Kilmer#/media/File:Val_Kilmer_Cannes.jpg'
 );
 
-INSERT INTO character (full_name, gender, picture) VALUES (
+INSERT INTO actor (full_name, gender, picture) VALUES (
     'Kelly Hu',
     'FEMALE',
     'https://en.wikipedia.org/wiki/Kelly_Hu#/media/File:Kelly_Hu.jpg'
 );
 
-INSERT INTO character (full_name, gender, picture) VALUES (
+INSERT INTO actor (full_name, gender, picture) VALUES (
     'Scarlett Johansson',
     'FEMALE',
     'https://en.wikipedia.org/wiki/Scarlett_Johansson#/media/File:Scarlett_Johansson_by_Gage_Skidmore_2_(cropped,_2).jpg'
 );
 
-INSERT INTO character (full_name, gender, picture) VALUES (
+INSERT INTO actor (full_name, gender, picture) VALUES (
     'Michael Fassbender',
     'MALE',
     'https://en.wikipedia.org/wiki/Michael_Fassbender#/media/File:Michael_Fassbender_by_Gage_Skidmore_2015.jpg'
 );
 
-INSERT INTO character (full_name, alias, gender, picture) VALUES (
+INSERT INTO actor (full_name, alias, gender, picture) VALUES (
     'Maria Halle Berry',
     'Halle Berry',
     'FEMALE',
