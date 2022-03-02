@@ -119,3 +119,10 @@ INSERT INTO movie_actors (movie_id, actor_id) VALUES (4, 4);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (5, 3);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (6, 1);
 INSERT INTO movie_actors (movie_id, actor_id) VALUES (6, 2);
+
+UPDATE movie SET franchise_id = 1 WHERE id = 1;
+UPDATE movie SET franchise_id = 1 WHERE id = 2;
+UPDATE movie SET franchise_id = 2 WHERE id = 3;
+UPDATE movie SET franchise_id = 3 WHERE id = 4;
+UPDATE movie SET franchise_id = 3 WHERE id = 5;
+UPDATE movie SET franchise_id = 4 WHERE id = 6;
