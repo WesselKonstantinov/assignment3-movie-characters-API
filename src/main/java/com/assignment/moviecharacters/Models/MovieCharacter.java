@@ -1,8 +1,11 @@
 package com.assignment.moviecharacters.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "actor")
@@ -26,5 +29,14 @@ public class Character {
     public String picture;
 
     @ManyToMany(mappedBy = "characters", fetch = FetchType.LAZY)
-    public List<Movie> movies = new ArrayList<>();
+    public List<Movie> movies;
+
+    @JsonGetter("movies")
+    public List<String> getMovies() {
+        if (movies != null) {
+            return movies.stream()
+                    .map(movie -> movie.title).collect(Collectors.toList());
+        }
+        return null;
+    }
 }

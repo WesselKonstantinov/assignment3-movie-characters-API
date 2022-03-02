@@ -110,3 +110,12 @@ INSERT INTO actor (full_name, alias, gender, picture) VALUES (
     'FEMALE',
     'https://en.wikipedia.org/wiki/Halle_Berry#/media/File:Halle_Berry_by_Gage_Skidmore_2.jpg'
 );
+
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 6);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (1, 7);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (2, 6);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (3, 5);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (4, 4);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (5, 3);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (6, 1);
+INSERT INTO movie_actors (movie_id, actor_id) VALUES (6, 2);
