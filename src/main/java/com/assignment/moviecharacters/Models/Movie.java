@@ -1,6 +1,8 @@
 package com.assignment.moviecharacters.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,10 +36,12 @@ public class Movie {
     public String trailer;
 
     @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "franchise_id")
     public Franchise franchise;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "movie_actors",
             joinColumns = {@JoinColumn(name = "movie_id")},

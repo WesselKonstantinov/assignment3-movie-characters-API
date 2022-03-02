@@ -1,8 +1,13 @@
 package com.assignment.moviecharacters.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "franchise")
@@ -10,7 +15,7 @@ public class Franchise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
     @Column(nullable = false, length = 80)
     public String name;
@@ -18,6 +23,18 @@ public class Franchise {
     @Column(nullable = false)
     public String description;
 
-    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY)
-    public List<Movie> movies = new ArrayList<>();
+    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public List<Movie> movies;
+
+    @JsonGetter("movies")
+    public List<String> getMovies() {
+        if (movies != null) {
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/movies/" + movie.id;
+                    }).collect(Collectors.toList());
+        }
+        return null;
+    }
 }
