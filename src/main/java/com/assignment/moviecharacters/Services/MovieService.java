@@ -1,20 +1,30 @@
 package com.assignment.moviecharacters.Services;
 
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
+import com.assignment.moviecharacters.Repositories.MovieCharacterRepository;
 import com.assignment.moviecharacters.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class MovieService {
+public class MovieService implements MovieServiceInt {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieCharacterRepository movieCharacterRepository;
+
 
     // Get all movies
     public ResponseEntity<List<Movie>> getAllMovies() {
@@ -104,4 +114,21 @@ public class MovieService {
         }
         return new ResponseEntity<>(status);
     }
+
+    @Override
+    public List<String> getAllMovieCharactersInMovie(@PathVariable String title){
+        Movie movie = movieRepository.findMovieByTitle(title);
+        List<String> movieCharacterNames = new ArrayList<>();
+        List<MovieCharacter> charactersInMovies;
+        charactersInMovies = movie.getMovieCharacters();
+
+        charactersInMovies.stream().map(
+                movieCharacter -> movieCharacterNames.add(movieCharacter.fullName)).collect(Collectors.toList());
+
+
+
+
+
+    return movieCharacterNames;
+}
 }

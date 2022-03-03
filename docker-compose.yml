@@ -7,7 +7,7 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:5432/${POSTGRES_DB}?sslmode=prefer&user=postgres&password=${POSTGRES_PASSWORD}
     ports:
-      - "8080:8080"
+      - "8085:8085"
 
   postgres:
     image: postgres:14-alpine

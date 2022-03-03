@@ -1,11 +1,16 @@
 package com.assignment.moviecharacters.Controllers;
 
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
+import com.assignment.moviecharacters.Repositories.MovieRepository;
 import com.assignment.moviecharacters.Services.MovieService;
+import com.assignment.moviecharacters.Services.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -14,6 +19,10 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
 
     @GetMapping("/all")
     public ResponseEntity<List<Movie>> getAllMovies() {
@@ -38,5 +47,26 @@ public class MovieController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
        return movieService.deleteMovie(id);
+    }
+
+    @GetMapping("/{title}/characters")
+    public ResponseEntity<Response> getAllMovieCharactersInMovie(@PathVariable String title){
+        List<String> characterNames;
+        HttpStatus status;
+        Response response = new Response();
+        
+        if(movieRepository.movieByTitleExists(title)){
+            status = HttpStatus.OK;
+            characterNames = movieService.getAllMovieCharactersInMovie(title);
+            Response.data = String.valueOf(characterNames);
+            Response.message ="All character in: " + title;
+
+        } else {
+            status = HttpStatus.NOT_FOUND;
+            Response.data = null;
+            Response.message = "movie not in library";
+        }
+
+        return new ResponseEntity<>(response, status);
     }
 }

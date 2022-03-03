@@ -25,6 +25,7 @@ public class MovieCharacterController {
         return movieCharacterService.getMovieCharacter(id);
     }
 
+
     @PostMapping("/add")
     public ResponseEntity<MovieCharacter> addMovieCharacter(@RequestBody MovieCharacter movieCharacter) {
         return movieCharacterService.addMovieCharacter(movieCharacter);

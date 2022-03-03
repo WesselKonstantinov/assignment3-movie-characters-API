@@ -68,4 +68,7 @@ public class Movie {
         return null;
     }
 
+    public List<MovieCharacter> getMovieCharacters() {
+        return movieCharacters;
+    }
 }
