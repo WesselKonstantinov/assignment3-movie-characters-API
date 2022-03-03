@@ -1,6 +1,7 @@
 package com.assignment.moviecharacters.Controllers;
 
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
 import com.assignment.moviecharacters.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public class MovieController {
         return movieService.getMovie(id);
     }
 
+    @GetMapping("/{id}/characters")
+    public ResponseEntity<List<String>> getAllMovieCharactersInMovie(@PathVariable Long id) {
+        return movieService.getAllMovieCharactersInMovie(id);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
@@ -33,6 +39,11 @@ public class MovieController {
     @PatchMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie newMovie) {
         return movieService.updateMovie(id, newMovie);
+    }
+
+    @PatchMapping("/{id}/characters/update")
+    public ResponseEntity<Movie> updateCharactersInMovie(@PathVariable Long id, @RequestBody Long[] characterIds) {
+        return movieService.updateCharactersInMovie(id, characterIds);
     }
 
     @DeleteMapping("/{id}")
