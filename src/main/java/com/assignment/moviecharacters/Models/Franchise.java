@@ -1,11 +1,8 @@
 package com.assignment.moviecharacters.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +20,7 @@ public class Franchise {
     @Column(nullable = false)
     public String description;
 
-    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "franchise", fetch = FetchType.LAZY)
     public List<Movie> movies;
 
     @JsonGetter("movies")
