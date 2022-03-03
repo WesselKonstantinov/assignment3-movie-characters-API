@@ -137,4 +137,17 @@ public class MovieService {
         }
         return new ResponseEntity<>(movie, status);
     }
+
+    public ResponseEntity<List<String>> getAllMovieCharactersInMovie(Long id) {
+        Movie movie = new Movie();
+        HttpStatus status;
+
+        if (movieRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            movie = movieRepository.findById(id).get();
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(movie.getCharacters(), status);
+    }
 }

@@ -1,6 +1,7 @@
 package com.assignment.moviecharacters.Controllers;
 
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
 import com.assignment.moviecharacters.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class MovieController {
     @GetMapping("/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable Long id) {
         return movieService.getMovie(id);
+    }
+
+    @GetMapping("/{id}/characters")
+    public ResponseEntity<List<String>> getAllMovieCharactersInMovie(@PathVariable Long id) {
+        return movieService.getAllMovieCharactersInMovie(id);
     }
 
     @PostMapping("/add")
