@@ -1,6 +1,8 @@
 package com.assignment.moviecharacters.Services;
 
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
+import com.assignment.moviecharacters.Repositories.MovieCharacterRepository;
 import com.assignment.moviecharacters.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieCharacterRepository movieCharacterRepository;
 
     // Get all movies
     public ResponseEntity<List<Movie>> getAllMovies() {
@@ -56,7 +61,6 @@ public class MovieService {
         HttpStatus status;
 
         if (movieRepository.existsById(id)) {
-
             Optional<Movie> movieRepos = movieRepository.findById(id);
             movie = movieRepos.get();
 
@@ -86,7 +90,6 @@ public class MovieService {
 
         } else {
             status = HttpStatus.NOT_FOUND;
-
         }
         return new ResponseEntity<>(movie, status);
     }
@@ -103,5 +106,35 @@ public class MovieService {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(status);
+    }
+
+    // Update movie characters of a given movie
+    public ResponseEntity<Movie> updateCharactersInMovie(Long id, Long[] characterIds) {
+        Movie movie = new Movie();
+        HttpStatus status;
+
+        if (movieRepository.existsById(id)) {
+            Optional<Movie> movieRepos = movieRepository.findById(id);
+            movie = movieRepos.get();
+
+            for (Long characterId : characterIds) {
+                if (movieCharacterRepository.existsById(characterId)) {
+                    MovieCharacter movieCharacter = movieCharacterRepository.findById(characterId).get();
+
+                    // List of characters will not be updated if movie character is already present
+                    if (!movie.movieCharacters.contains(movieCharacter)) {
+                        movie.movieCharacters.add(movieCharacter);
+                        movieCharacter.movies.add(movie);
+                        movieCharacterRepository.save(movieCharacter);
+                    }
+                }
+            }
+
+            status = HttpStatus.OK;
+            movieRepository.save(movie);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(movie, status);
     }
 }
