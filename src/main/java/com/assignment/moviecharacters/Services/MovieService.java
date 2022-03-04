@@ -50,7 +50,7 @@ public class MovieService {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(movie, status);
         }
-        status = HttpStatus.OK;
+        status = HttpStatus.CREATED;
         movie = movieRepository.save(movie);
         return new ResponseEntity<>(movie, status);
     }
@@ -100,7 +100,7 @@ public class MovieService {
 
         if (movieRepository.existsById(id)) {
             movieRepository.deleteById(id);
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
 
         } else {
             status = HttpStatus.NOT_FOUND;

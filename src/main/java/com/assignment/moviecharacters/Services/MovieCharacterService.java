@@ -45,7 +45,7 @@ public class MovieCharacterService {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(movieCharacter, status);
         }
-        status = HttpStatus.OK;
+        status = HttpStatus.CREATED;
         movieCharacter = movieCharacterRepository.save(movieCharacter);
         return new ResponseEntity<>(movieCharacter, status);
     }
@@ -90,7 +90,7 @@ public class MovieCharacterService {
 
         if (movieCharacterRepository.existsById(id)) {
             movieCharacterRepository.deleteById(id);
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
 
         } else {
             status = HttpStatus.NOT_FOUND;

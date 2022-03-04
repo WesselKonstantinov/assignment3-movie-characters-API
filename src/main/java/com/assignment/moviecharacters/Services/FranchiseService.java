@@ -51,7 +51,7 @@ public class FranchiseService {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(franchise, status);
         }
-        status = HttpStatus.OK;
+        status = HttpStatus.CREATED;
         franchise = franchiseRepository.save(franchise);
         return new ResponseEntity<>(franchise, status);
     }
@@ -94,7 +94,7 @@ public class FranchiseService {
                 movieRepository.save(movie);
             }
             franchiseRepository.deleteById(id);
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
 
         } else {
             status = HttpStatus.NOT_FOUND;

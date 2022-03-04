@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,12 +18,16 @@ public class MovieCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    @NotBlank
+    @Size(max = 60)
     @Column(nullable = false, length = 60)
     public String fullName;
 
+    @Size(max = 60)
     @Column(length = 60)
     public String alias;
 
+    @NotBlank
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     public Gender gender;
@@ -37,9 +43,7 @@ public class MovieCharacter {
     public List<String> getMovies() {
         if (movies != null) {
             return movies.stream()
-                    .map(movie -> {
-                        return "/api/movies/" + movie.id;
-                    }).collect(Collectors.toList());
+                    .map(movie -> "/api/movies/" + movie.id).collect(Collectors.toList());
         }
         return null;
     }
