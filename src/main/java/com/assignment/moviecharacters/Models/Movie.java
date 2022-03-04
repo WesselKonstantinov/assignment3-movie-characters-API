@@ -69,5 +69,7 @@ public class Movie {
         return null;
     }
 
-
+    public String getTitle() {
+        return title;
+    }
 }

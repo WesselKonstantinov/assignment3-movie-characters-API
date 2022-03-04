@@ -132,8 +132,21 @@ public class FranchiseService {
         return new ResponseEntity<>(franchise, status);
     }
 
+    public List<String> getAllMoviesInFranchise(Long id) {
+        List<String> moviesInFranchise = franchiseRepository.findById(id).get().getMovies();
+        List<String> movieTitle = new ArrayList<>();
+        moviesInFranchise.stream().map(
+
+                movie -> movieTitle.add(movie.title)).collect(Collectors.toList());
+
+        return movieTitle;
+    }
+
+
+
+
     public List<String> getAllMovieCharactersInFranchise(Long id) {
-        List<Movie> moviesInFranchise = franchiseRepository.findById(id).getMovies();
+        List<String> moviesInFranchise = franchiseRepository.findById(id).get().getMovies();
         List<MovieCharacter> movieCharactersInFranchise = new ArrayList<>();
         List<String> movieCharactersNames = new ArrayList<>();
 
