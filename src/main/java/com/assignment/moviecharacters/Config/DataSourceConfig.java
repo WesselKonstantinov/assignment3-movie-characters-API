@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 @Configuration
 @Profile("production")
 public class DataSourceConfig {
-    @Value("#{systeEnvironment['DATABASE_URL']}")
+    @Value("#{systemEnvironment['DATABASE_URL']}")
     String databaseUrl;
 
     @Bean
