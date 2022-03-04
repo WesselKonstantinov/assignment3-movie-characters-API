@@ -2,6 +2,7 @@ package com.assignment.moviecharacters.Services;
 
 import com.assignment.moviecharacters.Models.Franchise;
 import com.assignment.moviecharacters.Models.Movie;
+import com.assignment.moviecharacters.Models.MovieCharacter;
 import com.assignment.moviecharacters.Repositories.FranchiseRepository;
 import com.assignment.moviecharacters.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FranchiseService {
@@ -88,7 +91,7 @@ public class FranchiseService {
 
         if (franchiseRepository.existsById(id)) {
             Franchise franchise = franchiseRepository.findById(id).get();
-            for (Movie movie: franchise.movies) {
+            for (Movie movie : franchise.movies) {
                 movie.franchise = null;
                 movieRepository.save(movie);
             }
@@ -128,4 +131,25 @@ public class FranchiseService {
         }
         return new ResponseEntity<>(franchise, status);
     }
+
+    public List<String> getAllMovieCharactersInFranchise(Long id) {
+        List<Movie> moviesInFranchise = franchiseRepository.findById(id).getMovies();
+        List<MovieCharacter> movieCharactersInFranchise = new ArrayList<>();
+        List<String> movieCharactersNames = new ArrayList<>();
+
+
+        moviesInFranchise.stream().map(
+                movie -> movieCharactersInFranchise.addAll(movie.getMovieCharacters())
+        ).collect(Collectors.toList());
+
+        movieCharactersInFranchise.stream().distinct().map(
+                        movieCharacter -> movieCharactersNames.add(movieCharacter.fullName))
+                .collect(Collectors.toList());
+
+        return movieCharactersNames;
+    }
+
 }
+
+
+

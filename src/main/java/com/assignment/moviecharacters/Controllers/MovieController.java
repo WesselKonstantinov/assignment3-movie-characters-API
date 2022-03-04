@@ -1,7 +1,6 @@
 package com.assignment.moviecharacters.Controllers;
 
 import com.assignment.moviecharacters.Models.Movie;
-import com.assignment.moviecharacters.Models.MovieCharacter;
 import com.assignment.moviecharacters.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

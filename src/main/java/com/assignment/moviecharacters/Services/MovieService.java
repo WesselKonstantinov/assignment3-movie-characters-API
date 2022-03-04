@@ -148,6 +148,6 @@ public class MovieService {
         } else {
             status = HttpStatus.NOT_FOUND;
         }
-        return new ResponseEntity<>(movie.getCharacters(), status);
+        return new ResponseEntity<>(movie.getMovieCharacters(), status);
     }
 }
