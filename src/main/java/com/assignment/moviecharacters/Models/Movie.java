@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,17 +58,11 @@ public class Movie {
     }
 
     @JsonGetter("movieCharacters")
-    public Collection<? extends MovieCharacter> getMovieCharacters() {
+    public List<String> getMovieCharacters() {
         if (movieCharacters != null) {
             return movieCharacters.stream()
-                    .map(movieCharacter -> {
-                        return "/api/characters/" + movieCharacter.id;
-                    }).collect(Collectors.toList());
+                    .map(movieCharacter -> "/api/characters/" + movieCharacter.id).collect(Collectors.toList());
         }
         return null;
-    }
-
-    public String getTitle() {
-        return title;
     }
 }

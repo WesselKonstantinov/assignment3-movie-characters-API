@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,36 +130,44 @@ public class FranchiseService {
         return new ResponseEntity<>(franchise, status);
     }
 
-    public List<String> getAllMoviesInFranchise(Long id) {
-        List<String> moviesInFranchise = franchiseRepository.findById(id).get().getMovies();
-        List<String> movieTitle = new ArrayList<>();
-        moviesInFranchise.stream().map(
+    // Get movie characters of a given franchise
+    public ResponseEntity<List<String>> getAllMovieCharactersInFranchise(Long id) {
+        Franchise franchise;
+        HttpStatus status;
+        Set<MovieCharacter> movieCharactersInFranchise = new HashSet<>();
+        List<String> movieCharactersInFranchiseAsLinks = new ArrayList<>();
 
-                movie -> movieTitle.add(movie.title)).collect(Collectors.toList());
+        if (franchiseRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            franchise = franchiseRepository.findById(id).get();
 
-        return movieTitle;
+            for (Movie movie : franchise.movies) {
+                movieCharactersInFranchise.addAll(movie.movieCharacters);
+            }
+
+            movieCharactersInFranchiseAsLinks = movieCharactersInFranchise.stream()
+                    .map(movieCharacter -> "/api/characters/" + movieCharacter.id).collect(Collectors.toList());
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+
+        return new ResponseEntity<>(movieCharactersInFranchiseAsLinks, status);
     }
 
+    // Get movies of a given franchise
+    public ResponseEntity<List<String>> getAllMoviesInFranchise(Long id) {
+        Franchise franchise = new Franchise();
+        HttpStatus status;
 
+        if (franchiseRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            franchise = franchiseRepository.findById(id).get();
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
 
-
-    public List<String> getAllMovieCharactersInFranchise(Long id) {
-        List<String> moviesInFranchise = franchiseRepository.findById(id).get().getMovies();
-        List<MovieCharacter> movieCharactersInFranchise = new ArrayList<>();
-        List<String> movieCharactersNames = new ArrayList<>();
-
-
-        moviesInFranchise.stream().map(
-                movie -> movieCharactersInFranchise.addAll(movie.getMovieCharacters())
-        ).collect(Collectors.toList());
-
-        movieCharactersInFranchise.stream().distinct().map(
-                        movieCharacter -> movieCharactersNames.add(movieCharacter.fullName))
-                .collect(Collectors.toList());
-
-        return movieCharactersNames;
+        return new ResponseEntity<>(franchise.getMovies(), status);
     }
-
 }
 
 
