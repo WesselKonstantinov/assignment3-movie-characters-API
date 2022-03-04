@@ -61,7 +61,6 @@ public class FranchiseService {
         HttpStatus status;
 
         if (franchiseRepository.existsById(id)) {
-
             Optional<Franchise> franchiseRepos = franchiseRepository.findById(id);
             franchise = franchiseRepos.get();
 
@@ -79,7 +78,6 @@ public class FranchiseService {
 
         } else {
             status = HttpStatus.NOT_FOUND;
-
         }
         return new ResponseEntity<>(franchise, status);
     }
@@ -101,5 +99,33 @@ public class FranchiseService {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(status);
+    }
+
+    // Update movies of a given franchise
+    public ResponseEntity<Franchise> updateMoviesInFranchise(Long id, Long[] movieIds) {
+        Franchise franchise = new Franchise();
+        HttpStatus status;
+
+        if (franchiseRepository.existsById(id)) {
+            Optional<Franchise> franchiseRepos = franchiseRepository.findById(id);
+            franchise = franchiseRepos.get();
+
+            for (Long movieId : movieIds) {
+                if (movieRepository.existsById(movieId)) {
+                    Movie movie = movieRepository.findById(movieId).get();
+
+                    if (!franchise.movies.contains(movie)) {
+                        franchise.movies.add(movie);
+                        movie.franchise = franchise;
+                    }
+                }
+            }
+
+            status = HttpStatus.OK;
+            franchiseRepository.save(franchise);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(franchise, status);
     }
 }

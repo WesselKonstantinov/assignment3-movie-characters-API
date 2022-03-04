@@ -35,6 +35,11 @@ public class MovieController {
         return movieService.updateMovie(id, newMovie);
     }
 
+    @PatchMapping("/{id}/characters/update")
+    public ResponseEntity<Movie> updateCharactersInMovie(@PathVariable Long id, @RequestBody Long[] characterIds) {
+        return movieService.updateCharactersInMovie(id, characterIds);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
        return movieService.deleteMovie(id);
