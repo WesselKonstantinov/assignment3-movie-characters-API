@@ -4,7 +4,8 @@ Springdoc OpenAPI, Swagger, Postman, Docker and Heroku. This assignment required
 
 ## Online with Heroku
 Click on the heroku link to access the api:
-{link}
+
+https://movie-characters-api.herokuapp.com/swagger-ui/index.html
 
 ---
 ## Instructions Usage
