@@ -25,6 +25,16 @@ public class FranchiseController {
         return franchiseService.getFranchise(id);
     }
 
+    @GetMapping("/{id}/characters")
+    public ResponseEntity<List<String>> getAllMovieCharactersInFranchise(@PathVariable Long id) {
+        return franchiseService.getAllMovieCharactersInFranchise(id);
+    }
+
+    @GetMapping("/{id}/movies")
+    public ResponseEntity<List<String>> getAllMoviesInFranchise(@PathVariable Long id) {
+        return franchiseService.getAllMoviesInFranchise(id);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise) {
         return franchiseService.addFranchise(franchise);

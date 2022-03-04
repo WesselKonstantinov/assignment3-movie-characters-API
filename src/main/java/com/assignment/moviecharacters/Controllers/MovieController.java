@@ -25,6 +25,11 @@ public class MovieController {
         return movieService.getMovie(id);
     }
 
+    @GetMapping("/{id}/characters")
+    public ResponseEntity<List<String>> getAllMovieCharactersInMovie(@PathVariable Long id) {
+        return movieService.getAllMovieCharactersInMovie(id);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);

@@ -58,14 +58,11 @@ public class Movie {
     }
 
     @JsonGetter("movieCharacters")
-    public List<String> getCharacters() {
+    public List<String> getMovieCharacters() {
         if (movieCharacters != null) {
             return movieCharacters.stream()
-                    .map(movieCharacter -> {
-                        return "/api/characters/" + movieCharacter.id;
-                    }).collect(Collectors.toList());
+                    .map(movieCharacter -> "/api/characters/" + movieCharacter.id).collect(Collectors.toList());
         }
         return null;
     }
-
 }
